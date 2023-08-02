@@ -1,6 +1,7 @@
 package org.example.file.reader;
 
 import org.example.AppConstants;
+import org.example.date.DateFormatParser;
 import org.example.model.EmploymentPeriod;
 import org.example.model.Project;
 
@@ -8,10 +9,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader {
+
+    private DateFormatParser dateFormatParser = DateFormatParser.getInstance();
 
     @Override
     public Map<Integer, Project> readProjects(String file) {
@@ -23,9 +25,6 @@ public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader
         if (isNotCSVFile(file)) {
             throw new IllegalArgumentException(String.format(AppConstants.FILE_IS_NOT_CSV_TYPE, file));
         }
-
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Map<Integer, Project> projectMap = new HashMap<>();
 
@@ -44,8 +43,8 @@ public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader
                 String[] data = line.split(",");
                 Integer employeeId = Integer.parseInt(data[0].trim());
                 Integer projectID = Integer.parseInt(data[1].trim());
-                Date dateFrom = dateFormat.parse(data[2].trim());
-                Date dateTo = data[3].trim().equalsIgnoreCase(AppConstants.DATE_TO_NULL_VALUE) ? new Date() : dateFormat.parse(data[3].trim());
+                Date dateFrom = dateFormatParser.parseDate(data[2].trim());
+                Date dateTo = data[3].trim().equalsIgnoreCase(AppConstants.DATE_TO_NULL_VALUE) ? new Date() : dateFormatParser.parseDate(data[3].trim());
 
 
                 Project existingProject = projectMap.get(projectID);
