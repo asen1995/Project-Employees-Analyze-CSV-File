@@ -17,17 +17,8 @@ public class MaxEmploymentPair {
         this.maxOverlapMonthsOnProject = 0;
     }
 
-
-    public Integer getEmployeeIdFirst() {
-        return employeeIdFirst;
-    }
-
     public void setEmployeeIdFirst(Integer employeeIdFirst) {
         this.employeeIdFirst = employeeIdFirst;
-    }
-
-    public Integer getEmployeeIdSecond() {
-        return employeeIdSecond;
     }
 
     public void setEmployeeIdSecond(Integer employeeIdSecond) {

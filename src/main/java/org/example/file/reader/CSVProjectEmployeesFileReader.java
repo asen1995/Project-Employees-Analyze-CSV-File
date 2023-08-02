@@ -1,5 +1,6 @@
 package org.example.file.reader;
 
+import org.example.AppConstants;
 import org.example.model.EmploymentPeriod;
 import org.example.model.Project;
 
@@ -12,20 +13,15 @@ import java.util.*;
 
 public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader {
 
-    public static final String FILE_NAME_IS_NULL_OR_EMPTY = "File name is null or empty: %s";
-    public static final String FILE_IS_NOT_CSV_TYPE = "File is not CSV type : %s";
-    public static final String FILE_DONT_HAVE_ANY_DATA = "File don't have any data";
-    public static final String DATE_TO_NULL_VALUE = "NULL";
-
     @Override
     public Map<Integer, Project> readProjects(String file) {
 
         if (isNullOrEmpty(file)) {
-            throw new IllegalArgumentException(String.format(FILE_NAME_IS_NULL_OR_EMPTY, file));
+            throw new IllegalArgumentException(String.format(AppConstants.FILE_NAME_IS_NULL_OR_EMPTY, file));
         }
 
         if (isNotCSVFile(file)) {
-            throw new IllegalArgumentException(String.format(FILE_IS_NOT_CSV_TYPE, file));
+            throw new IllegalArgumentException(String.format(AppConstants.FILE_IS_NOT_CSV_TYPE, file));
         }
 
 
@@ -49,7 +45,7 @@ public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader
                 Integer employeeId = Integer.parseInt(data[0].trim());
                 Integer projectID = Integer.parseInt(data[1].trim());
                 Date dateFrom = dateFormat.parse(data[2].trim());
-                Date dateTo = data[3].trim().equalsIgnoreCase(DATE_TO_NULL_VALUE) ? new Date() : dateFormat.parse(data[3].trim());
+                Date dateTo = data[3].trim().equalsIgnoreCase(AppConstants.DATE_TO_NULL_VALUE) ? new Date() : dateFormat.parse(data[3].trim());
 
 
                 Project existingProject = projectMap.get(projectID);
@@ -71,7 +67,7 @@ public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader
 
 
         if(projectMap.isEmpty()){
-            throw new IllegalArgumentException(FILE_DONT_HAVE_ANY_DATA);
+            throw new IllegalArgumentException(AppConstants.FILE_DONT_HAVE_ANY_DATA);
         }
 
         return projectMap;

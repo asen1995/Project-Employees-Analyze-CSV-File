@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.file.reader.CSVProjectEmployeesFileReader;
 import org.example.file.reader.ProjectEmployeesFileReader;
+import org.example.model.Company;
 import org.example.model.MaxEmploymentPair;
 import org.example.model.Project;
 
@@ -15,24 +16,18 @@ public class Main {
         String csvFile = "employees-projects.csv";
 
         projectEmployeesFileReader = new CSVProjectEmployeesFileReader();
+
         Map<Integer, Project> projects = projectEmployeesFileReader.readProjects(csvFile);
 
-        MaxEmploymentPair maxEmploymentPair = null;
-        
-        for(Integer projectId : projects.keySet()){
-            final Project project = projects.get(projectId);
+        Company company = new Company(projects);
 
-            if(project.atLeastTwoPeopleWorkedOnThisProject()) {
-                final Optional<MaxEmploymentPair> maximumEmploymentPeriodBetweenTwoEmployeesOnThisProject = project.findMaximumEmploymentPeriodBetweenTwoEmployeesOnThisProject();
-                if(maximumEmploymentPeriodBetweenTwoEmployeesOnThisProject.isPresent()){
-                    maxEmploymentPair = maximumEmploymentPeriodBetweenTwoEmployeesOnThisProject.get();
-                }
-            }
+        Optional<MaxEmploymentPair> maxEmploymentPair = company.findMaximumEmploymentPeriodPairBetweenTwoEmployeesOnAProject();
+
+        if (maxEmploymentPair.isPresent()) {
+            System.out.println(maxEmploymentPair.get());
+        }else {
+            System.out.println("No pair of employees worked together on a project");
         }
 
-
-        System.out.println(maxEmploymentPair);
     }
-
-
 }
