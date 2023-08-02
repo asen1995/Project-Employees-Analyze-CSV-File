@@ -48,7 +48,10 @@ public class Project {
                 final List<EmploymentPeriod> employmentPeriodsSecondEmployee = employmentPeriods.get(employeeIdsList.get(secondEmployeeIndex));
 
                 for (int i = 0; i < employmentPeriodsFirstEmployee.size(); i++) {
-                    for (int j = 0; j < employmentPeriodsSecondEmployee.size(); j++){
+
+                    int overlapMonths = 0;
+
+                    for (int j = 0; j < employmentPeriodsSecondEmployee.size(); j++) {
 
                         final Date dateFromFirstEmployee = employmentPeriodsFirstEmployee.get(i).getDateFrom();
                         final Date dateToFirstEmployee = employmentPeriodsFirstEmployee.get(i).getDateTo();
@@ -56,14 +59,14 @@ public class Project {
                         final Date dateFromSecondEmployee = employmentPeriodsSecondEmployee.get(j).getDateFrom();
                         final Date dateToSecondEmployee = employmentPeriodsSecondEmployee.get(j).getDateTo();
 
-                        int overlapMonths = dateCalculator.calculateOverlapMonths(dateFromFirstEmployee, dateToFirstEmployee, dateFromSecondEmployee, dateToSecondEmployee);
+                        overlapMonths += dateCalculator.calculateOverlapMonths(dateFromFirstEmployee, dateToFirstEmployee, dateFromSecondEmployee, dateToSecondEmployee);
+                    }
 
-                        if(overlapMonths > maxEmploymentPair.getMaxOverlapMonthsOnProject()){
-                            maxEmploymentPair.setEmployeeIdFirst(employeeIdsList.get(firstEmployeeIndex));
-                            maxEmploymentPair.setEmployeeIdSecond(employeeIdsList.get(secondEmployeeIndex));
-                            maxEmploymentPair.setMaxOverlapMonthsOnProject(overlapMonths);
+                    if (overlapMonths > maxEmploymentPair.getMaxOverlapMonthsOnProject()) {
+                        maxEmploymentPair.setEmployeeIdFirst(employeeIdsList.get(firstEmployeeIndex));
+                        maxEmploymentPair.setEmployeeIdSecond(employeeIdsList.get(secondEmployeeIndex));
+                        maxEmploymentPair.setMaxOverlapMonthsOnProject(overlapMonths);
 
-                        }
                     }
                 }
 
@@ -72,7 +75,6 @@ public class Project {
 
         return maxEmploymentPair.getMaxOverlapMonthsOnProject() == 0 ? Optional.empty() : Optional.of(maxEmploymentPair);
     }
-
 
 
     public boolean atLeastTwoPeopleWorkedOnThisProject() {
