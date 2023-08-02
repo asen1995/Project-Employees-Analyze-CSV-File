@@ -6,13 +6,6 @@ public class MaxEmploymentPair {
     private Integer employeeIdSecond;
     private Integer maxOverlapMonthsOnProject;
 
-
-    public MaxEmploymentPair(Integer employeeIdFirst, Integer employeeIdSecond, Integer maxOverlapMonthsOnProject) {
-        this.employeeIdFirst = employeeIdFirst;
-        this.employeeIdSecond = employeeIdSecond;
-        this.maxOverlapMonthsOnProject = maxOverlapMonthsOnProject;
-    }
-
     public MaxEmploymentPair() {
         this.maxOverlapMonthsOnProject = 0;
     }

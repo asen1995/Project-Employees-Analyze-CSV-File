@@ -3,8 +3,8 @@ package org.example.model;
 import java.util.Date;
 
 public class EmploymentPeriod {
-    private Date dateFrom;
-    private Date dateTo;
+    private final Date dateFrom;
+    private final Date dateTo;
 
     public EmploymentPeriod(Date dateFrom, Date dateTo) {
         this.dateFrom = dateFrom;

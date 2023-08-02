@@ -5,8 +5,8 @@ import org.example.date.DateCalculator;
 import java.util.*;
 
 public class Project {
-    private Integer projectID;
-    private Map<Integer, List<EmploymentPeriod>> employmentPeriods;
+    private final Integer projectID;
+    private final Map<Integer, List<EmploymentPeriod>> employmentPeriods;
 
     public Project(Integer projectID) {
         this.projectID = projectID;
@@ -47,17 +47,17 @@ public class Project {
                 final List<EmploymentPeriod> employmentPeriodsFirstEmployee = employmentPeriods.get(employeeIdsList.get(firstEmployeeIndex));
                 final List<EmploymentPeriod> employmentPeriodsSecondEmployee = employmentPeriods.get(employeeIdsList.get(secondEmployeeIndex));
 
-                for (int i = 0; i < employmentPeriodsFirstEmployee.size(); i++) {
+                for (int firstEmployeeEmploymentPeriodIndex = 0; firstEmployeeEmploymentPeriodIndex < employmentPeriodsFirstEmployee.size(); firstEmployeeEmploymentPeriodIndex++) {
 
                     int overlapMonths = 0;
 
-                    for (int j = 0; j < employmentPeriodsSecondEmployee.size(); j++) {
+                    for (int secondEmployeeEmploymentPeriodIndex = 0; secondEmployeeEmploymentPeriodIndex < employmentPeriodsSecondEmployee.size(); secondEmployeeEmploymentPeriodIndex++) {
 
-                        final Date dateFromFirstEmployee = employmentPeriodsFirstEmployee.get(i).getDateFrom();
-                        final Date dateToFirstEmployee = employmentPeriodsFirstEmployee.get(i).getDateTo();
+                        final Date dateFromFirstEmployee = employmentPeriodsFirstEmployee.get(firstEmployeeEmploymentPeriodIndex).getDateFrom();
+                        final Date dateToFirstEmployee = employmentPeriodsFirstEmployee.get(firstEmployeeEmploymentPeriodIndex).getDateTo();
 
-                        final Date dateFromSecondEmployee = employmentPeriodsSecondEmployee.get(j).getDateFrom();
-                        final Date dateToSecondEmployee = employmentPeriodsSecondEmployee.get(j).getDateTo();
+                        final Date dateFromSecondEmployee = employmentPeriodsSecondEmployee.get(secondEmployeeEmploymentPeriodIndex).getDateFrom();
+                        final Date dateToSecondEmployee = employmentPeriodsSecondEmployee.get(secondEmployeeEmploymentPeriodIndex).getDateTo();
 
                         overlapMonths += dateCalculator.calculateOverlapMonths(dateFromFirstEmployee, dateToFirstEmployee, dateFromSecondEmployee, dateToSecondEmployee);
                     }

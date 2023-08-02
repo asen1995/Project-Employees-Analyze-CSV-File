@@ -7,13 +7,16 @@ import org.example.model.Project;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader {
 
-    private DateFormatParser dateFormatParser = DateFormatParser.getInstance();
+    private final DateFormatParser dateFormatParser = DateFormatParser.getInstance();
 
     @Override
     public Map<Integer, Project> readProjects(String file) {
@@ -26,12 +29,18 @@ public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader
             throw new IllegalArgumentException(String.format(AppConstants.FILE_IS_NOT_CSV_TYPE, file));
         }
 
+        final InputStream resourceAsStream = CSVProjectEmployeesFileReader.class.getClassLoader().getResourceAsStream(file);
+
+        if(fileDontExist(resourceAsStream)){
+            throw new IllegalArgumentException(String.format(AppConstants.FILE_DOES_NOT_EXIST, file));
+        }
+
         Map<Integer, Project> projectMap = new HashMap<>();
 
         boolean skipHeader = true;
         int lineNumber = 1;
 
-        try (BufferedReader br = new BufferedReader(new InputStreamReader( CSVProjectEmployeesFileReader.class.getClassLoader().getResourceAsStream(file)))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream))) {
             String line;
             while ((line = br.readLine()) != null) {
 
@@ -70,6 +79,10 @@ public class CSVProjectEmployeesFileReader implements ProjectEmployeesFileReader
         }
 
         return projectMap;
+    }
+
+    private static boolean fileDontExist(InputStream resourceAsStream) {
+        return resourceAsStream == null;
     }
 
     private static boolean isNullOrEmpty(String file) {

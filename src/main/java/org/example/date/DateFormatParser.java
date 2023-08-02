@@ -7,8 +7,7 @@ import java.util.Date;
 
 public class DateFormatParser {
 
-    private static DateFormatParser instance = new DateFormatParser(
-            new SimpleDateFormat("yyyy-MM-dd"),
+    private static final DateFormat[] SUPPORTED_DATE_FORMATS = {new SimpleDateFormat("yyyy-MM-dd"),
             new SimpleDateFormat("yyyy/MM/dd"),
             new SimpleDateFormat("yyyy.MM.dd"),
             new SimpleDateFormat("dd-MM-yyyy"),
@@ -22,7 +21,9 @@ public class DateFormatParser {
             new SimpleDateFormat("dd MMMM, yyyy"),
             new SimpleDateFormat("dd MMMM,yyyy"),
             new SimpleDateFormat("dd MMMM,yyyy"),
-            new SimpleDateFormat("dd MMMM,yyyy"));
+            new SimpleDateFormat("dd MMMM,yyyy")};
+    private static final DateFormatParser instance = new DateFormatParser(
+            SUPPORTED_DATE_FORMATS);
 
     private final DateFormat[] dateFormats;
 

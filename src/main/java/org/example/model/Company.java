@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class Company {
-    private Map<Integer, Project> projects;
+    private final Map<Integer, Project> projects;
     public Company(Map<Integer, Project> projects) {
         this.projects = projects;
     }
